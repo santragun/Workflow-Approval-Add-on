@@ -1,40 +1,4 @@
 
-function triggerSetup()
-{
-  var form = FormApp.getActiveForm();
-  form.setCollectEmail(true);
-  form.setDescription('Description of form')
-     .setConfirmationMessage('Thanks for responding!')
-     .setAllowResponseEdits(true)
-     .setAcceptingResponses(true);
-
-  setupDestination();
-  var triggers = ScriptApp.getUserTriggers(form);
-  var existingTrigger = null;
-   
-  for (var i = 0; i < triggers.length; i++) {
-    if (triggers[i].getEventType() == ScriptApp.EventType.ON_FORM_SUBMIT) {
-      existingTrigger = triggers[i];
-        try {
-          ScriptApp.deleteTrigger(existingTrigger);
-      
-      }catch(e){
-        Logger.log("can't delete trigger " + e);
-      }
-      
-    }
-  }
-  setApprovalProcess();
-  try{
-     ScriptApp.newTrigger('setTrigger')
-        .forForm(form)
-        .onFormSubmit()
-        .create();
-        
-  }catch(e){
-    Logger.log("can't create trigger " + e);
-  }
-}
 function authorization(){
   Logger.log("deleted trigger");
 }
@@ -110,7 +74,6 @@ function setTrigger(e) {
 
     // Get response data and save to properties
     var timeStamp = Utilities.formatDate(new Date(), "GMT", "yyyy-MM-dd'T'HH:mm:ss'Z'");
-    var requestsSpreadsheetUrl = "https://docs.google.com/spreadsheets/d/13BydN8SC0i55ShJkSEV1GUkhogWYMGKJXcR4W0s7C6w/edit#gid=0";
    
     var id = documentProperties.getProperty('id');
     var spreadSheet = SpreadsheetApp.openByUrl(requestsSpreadsheetUrl);
