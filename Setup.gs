@@ -1,35 +1,3 @@
-var documentProperties = PropertiesService.getDocumentProperties();
-//Setup properties
-function workflow(receipents,keyNameArray){
-  var noOfapprovers = receipents.pop();
-  var notifyRespondentChanges = receipents.pop();
-  var workflowLevel = receipents.pop();
-  var notifyRespondent = receipents.pop();
-  var notifyMe = receipents.pop();
-  var creator = Session.getActiveUser().getEmail();
-  
-
-  var properties = {
-    creatorEmail : creator, 
-    notifyMe : notifyMe, 
-    notifyRespondent : notifyRespondent,
-    workflowlevel : workflowLevel,
-    notifyRespondentChanges, notifyRespondentChanges,
-    noOfapprovers : noOfapprovers
-    };
-
-  var propertiesOfApproval = {};
-
-  for(var i = 0; i < receipents.length; i++){
-    var keyName = keyNameArray[i];
-    propertiesOfApproval[keyName] = receipents[i];
-  }
-  documentProperties.deleteAllProperties();
-  documentProperties.setProperties(properties);
-  documentProperties.setProperties(propertiesOfApproval);
-
-  triggerSetup();
-}
 
 function triggerSetup()
 {
